@@ -1,0 +1,34 @@
+<!-- template driven forms  -->
+<div class="card">
+    <div class="card-heder">
+        Add new property
+    </div>
+    <div class="card-body">
+        <form (ngSubmit)="onSubmit(Form)"  #Form="ngForm">
+            <div class="form-group col-12">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" #propName="ngModel" ngModel name="Name" required minlength="5"  [ngClass]="{'valid-input': propName.valid && propName.touched, 'invalid-input': !propName.valid && propName.touched}">
+                <span class="error-black" *ngIf="!propName.valid && propName.touched">
+                 <span *ngIf="propName.errors?.['required']">
+                  Please Provide a Name
+                 </span>
+                 <span *ngIf="propName.errors?.['minlength']">
+                 Name must be at least 5 characters
+                 </span>
+                </span>
+            </div>
+            <div class="form-group col-12">
+                <label for="type">Type</label>
+                <input type="text" class="form-control"  ngModel name="Type" >
+            </div>
+            <div class="form-group col-12">
+                <label for="price">Price</label>
+                <input type="text" class="form-control"  ngModel name="Price" >
+            </div>
+            <div class="form-group col-12">
+                <button type="submit" [disabled]="!Form.valid" class="btn btn-primary ">Save</button>
+                <button type="reset" class="btn btn-primary">cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
