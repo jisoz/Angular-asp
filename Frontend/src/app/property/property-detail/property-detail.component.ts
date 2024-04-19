@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HousingService } from '../../services/housing.service';
+import { Property } from '../../../model/property';
+import { IPropertyBase } from '../../../model/ipropertybase';
 
 @Component({
   selector: 'app-property-detail',
@@ -8,7 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class PropertyDetailComponent implements OnInit {
   public propertyid!:number;
-  constructor(private root:ActivatedRoute, private router:Router){}
+  property=new Property()
+  constructor(private root:ActivatedRoute, private router:Router, private housingservice:HousingService){}
 
   ngOnInit(): void {
    this.propertyid = Number(this.root.snapshot.params['id']);
@@ -16,6 +20,13 @@ export class PropertyDetailComponent implements OnInit {
    this.root.params.subscribe(
     (params)=>{
       this.propertyid=+params['id'];
+      this.housingservice.getproperty(this.propertyid).subscribe(
+        (data: IPropertyBase | undefined) => {
+          if (data) {
+            this.property = data as Property;
+          }
+        }
+      )
     }
    )
   }
@@ -25,6 +36,5 @@ export class PropertyDetailComponent implements OnInit {
     this.router.navigate(['property-detail', this.propertyid])
 
   }
-
 
 }

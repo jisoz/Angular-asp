@@ -13,6 +13,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { PropertyDetailComponent } from './property/property-detail/property-detail.component';
 import { UserLoginComponent } from './user/user-login/user-login.component';
 import { UserRegsterComponent } from './user/user-regster/user-regster.component';
+import { UserService } from './services/user.service';
+import { AlertifyService } from './services/alertify.service';
+import { AuthService } from './services/auth.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BsDropdownModule} from "ngx-bootstrap/dropdown"
+import { TabsModule } from 'ngx-bootstrap/tabs'; 
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker'
 
 const  appRoutes: Routes = [
   {path:'',component:PropertyListComponent},
@@ -20,6 +27,7 @@ const  appRoutes: Routes = [
   {path:'add-property',component: AddPropertyComponent},
   {path:'property-detail/:id',component: PropertyDetailComponent},
   {path:'register',component: UserRegsterComponent},
+  {path:'login',component: UserLoginComponent},
   {path:"**",component:PropertyListComponent}
 
 ]
@@ -41,9 +49,14 @@ const  appRoutes: Routes = [
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    BsDropdownModule.forRoot(),
+    TabsModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     RouterModule.forRoot(appRoutes),
+    
   ],
-  providers: [HousingService],
+  providers: [HousingService,UserService,AlertifyService,AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
