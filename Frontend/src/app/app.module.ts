@@ -13,13 +13,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { PropertyDetailComponent } from './property/property-detail/property-detail.component';
 import { UserLoginComponent } from './user/user-login/user-login.component';
 import { UserRegsterComponent } from './user/user-regster/user-regster.component';
-import { UserService } from './services/user.service';
+// import { UserService } from './services/user.service';
 import { AlertifyService } from './services/alertify.service';
 import { AuthService } from './services/auth.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BsDropdownModule} from "ngx-bootstrap/dropdown"
 import { TabsModule } from 'ngx-bootstrap/tabs'; 
-import {BsDatepickerModule} from 'ngx-bootstrap/datepicker'
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import { FilterPipe } from './pipes/filter.pipe';
+import { SortPipe } from './pipes/sort.pipe'
+
+
 
 const  appRoutes: Routes = [
   {path:'',component:PropertyListComponent},
@@ -41,7 +45,9 @@ const  appRoutes: Routes = [
     AddPropertyComponent,
     PropertyDetailComponent,
     UserLoginComponent,
-    UserRegsterComponent
+    UserRegsterComponent,
+    FilterPipe,
+    SortPipe
   ],
   imports: [
     BrowserModule,
@@ -56,7 +62,7 @@ const  appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     
   ],
-  providers: [HousingService,UserService,AlertifyService,AuthService],
+  providers: [HousingService,AlertifyService,AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

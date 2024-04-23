@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, filter, map } from 'rxjs';
 
 import { IPropertyBase } from '../../model/ipropertybase';
 import { Property } from '../../model/property';
@@ -13,6 +13,14 @@ export class HousingService {
 
   }
 
+Baseurl= "http://localhost:5089/api/"
+
+getAllcities():Observable<any[]>{
+return this.http.get<any[]>(`${this.Baseurl}City`)  
+}
+
+
+
 
   getproperty(id: number) {
     return this.getallproperties().pipe(
@@ -21,11 +29,12 @@ export class HousingService {
       })
     );
   }
-  getallproperties(SellRent?:number):Observable<IPropertyBase[]> {
+ 
+  getallproperties(SellRent?:number):Observable<Property[]> {
   return this.http.get('Data/properties.json').pipe(
     map(
       (data: {[key: string]: any}) => {
-        const propertiesArray: IPropertyBase[] = [];
+        const propertiesArray: Property[] = [];
         const newprop=localStorage.getItem('newprop')
         if (newprop!==null){
           const localproperties=JSON.parse(newprop);
@@ -49,11 +58,11 @@ export class HousingService {
             if (Object.prototype.hasOwnProperty.call(data, id)) {
               const property = data[id];
               if (typeof property === 'object' && property.SellRent === SellRent) {
-                propertiesArray.push(property as IPropertyBase);
+                propertiesArray.push(property as Property);
               }
             }
           }else{
-            propertiesArray.push(data[id] as IPropertyBase);
+            propertiesArray.push(data[id] as Property);
           }
          
         }

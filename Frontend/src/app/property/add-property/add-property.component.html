@@ -65,8 +65,11 @@
 
                 <div class="form-group col-12">
                   <label>City</label>
-               
-                    <input type="text" class="form-control" [(ngModel)]="propertieview.City" formControlName="City">
+                   <Select  class="form-control" [(ngModel)]="propertieview.City" formControlName="City">
+                  <option value="">--Select City--</option>
+                  <option *ngFor="let City of CitiyList" value="{{City.id}}">{{City.name}}</option>
+                  </Select>
+                    
                  
                   
                 </div>

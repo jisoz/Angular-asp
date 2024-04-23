@@ -21,12 +21,15 @@ constructor(private fb: FormBuilder , private router: Router , private housingse
 
 }
   ngOnInit(): void {
+    this.housingservice.getAllcities().subscribe(cities =>
+      this.CitiyList=cities
+     )
     this.createAddpropertyForm();
   }
 @ViewChild('formtabs') formtabs!:TabsetComponent;
 addPropertyForm!:FormGroup
 hide:boolean=true;
-
+CitiyList!:any[]
 propertytypes:Array<string> =['House','Appartment','Duplex']
 furnishtypes:Array<string> =['Fully','Semi','Unfurnished']
 propertieview:IPropertyBase={

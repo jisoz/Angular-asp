@@ -16,6 +16,11 @@ export class PropertyDetailComponent implements OnInit {
 
   ngOnInit(): void {
    this.propertyid = Number(this.root.snapshot.params['id']);
+  //  this.root.data.subscribe(
+  //   data=>{
+  //     this.property=data['prp']
+  //   }
+  //  )
    //for refreching component 
    this.root.params.subscribe(
     (params)=>{

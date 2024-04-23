@@ -12,12 +12,13 @@ export class NavbarComponent {
 constructor(private alertify:AlertifyService){}
   loggedin(){
     
-     this.loggedinuser=localStorage.getItem('Token');
+     this.loggedinuser=localStorage.getItem('Username');
      return this.loggedinuser
   }
   loggedout(){
 
      localStorage.removeItem('Token');
+     localStorage.removeItem('Username');
      this.alertify.success("logout succesfully")
     
   }

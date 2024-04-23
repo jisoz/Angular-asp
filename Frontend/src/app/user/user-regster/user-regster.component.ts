@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, NgForm, ValidationErrors, Validators } from '@angular/forms';
-import { UserService } from '../../services/user.service';
-import { User } from '../../../model/user';
+// import { UserService } from '../../services/user.service';
+import { UserForRegister } from '../../../model/user';
 import * as alertify from 'alertifyjs';
 import { AlertifyService } from '../../services/alertify.service';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-user-regster',
   templateUrl: './user-regster.component.html',
@@ -12,9 +13,9 @@ import { AlertifyService } from '../../services/alertify.service';
 export class UserRegsterComponent implements OnInit {
 
 registrationform!: FormGroup;
-user!:User
+user!:UserForRegister
 usersubmitted!: boolean
-constructor(private fb: FormBuilder , private userservice:UserService,private alertifyservice:AlertifyService){
+constructor(private fb: FormBuilder ,private alertifyservice:AlertifyService,private authservice:AuthService){
 
 }
 
@@ -66,10 +67,18 @@ constructor(private fb: FormBuilder , private userservice:UserService,private al
     this.usersubmitted=true;
 if(this.registrationform.valid){
   // this.user=Object.assign(this.user,this.registrationform.value);
-  this.userservice.addUser(this.userData());
-  this.registrationform.reset();
-  this.usersubmitted=false;
-  this.alertifyservice.success("congrats , succesfuuly registred");
+  // this.userservice.addUser(this.userData());
+  this.authservice.register(this.userData()).subscribe(()=>
+    {
+     this.onreset();
+      this.alertifyservice.success("congrats , succesfuuly registred");
+    },error=>{
+      this.alertifyservice.error(error.error);
+    }
+   
+  )
+  
+  
 }else{
   this.alertifyservice.error("failed")
 }
@@ -78,9 +87,13 @@ if(this.registrationform.valid){
 
   }
 
-userData():User{
+onreset(){
+  this.registrationform.reset();
+  this.usersubmitted=false;
+}
+userData():UserForRegister{
   return this.user={
-    userName: this.userName.value,
+    username: this.userName.value,
     email: this.email.value,
     password:this.password.value,
     mobile: this.mobile.value,

@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { AlertifyService } from '../../services/alertify.service';
 import { Router } from '@angular/router';
+import { UserForLogin } from '../../../model/user';
 
 @Component({
   selector: 'app-user-login',
@@ -15,16 +16,31 @@ constructor(private authservice:AuthService, private alertify:AlertifyService,pr
 
 }
   onLogin(fm :NgForm){
-   const user=this.authservice.authuser(fm.value);
+   this.authservice.authuser(fm.value).subscribe(
+    (res:UserForLogin)=>{
 
-   if (user){
-    // console.log("success login")
-    localStorage.setItem("Token", user.userName);
-    this.alertify.success("login succesfully");
-    this.router.navigate(['/']);
-   }else{
-    // console.log("error login")
-    this.alertify.success("error login")
-   }
-  }
+      const user=res;
+      console.log(res);
+      localStorage.setItem('Token',user.token);
+      localStorage.setItem('Username',user.username);
+      this.alertify.success("login successful");
+      this.router.navigate(['/'])
+    },error=>{
+      this.alertify.error(error.error)
+    }
+   )
+
+  //  const user=this.authservice.authuser(fm.value);
+
+  //  if (user){
+  //   // console.log("success login")
+  //   localStorage.setItem("Token", user.userName);
+  //   this.alertify.success("login succesfully");
+  //   this.router.navigate(['/']);
+  //  }else{
+  //   // console.log("error login")
+  //   this.alertify.success("error login")
+  //  }
+ 
+}
 }
