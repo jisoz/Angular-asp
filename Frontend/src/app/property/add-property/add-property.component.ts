@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Property } from '../../../model/property';
 import { HousingService } from '../../services/housing.service';
 import { AlertifyService } from '../../services/alertify.service';
+import { KeyValuePair } from '../../../model/KeyValuePair';
 
 @Component({
   selector: 'app-add-property',
@@ -22,27 +23,33 @@ constructor(private fb: FormBuilder , private router: Router , private housingse
 }
   ngOnInit(): void {
     this.housingservice.getAllcities().subscribe(cities =>
+      
       this.CitiyList=cities
+     
      )
+     this.housingservice.getpropertytype().subscribe(proptypes=>this.propertytypes=proptypes)
+
+     this.housingservice.getfurnishuretype().subscribe(furnish=>this.furnishtypes=furnish)
+     
     this.createAddpropertyForm();
   }
 @ViewChild('formtabs') formtabs!:TabsetComponent;
 addPropertyForm!:FormGroup
 hide:boolean=true;
 CitiyList!:any[]
-propertytypes:Array<string> =['House','Appartment','Duplex']
-furnishtypes:Array<string> =['Fully','Semi','Unfurnished']
+propertytypes!:Array<KeyValuePair> 
+furnishtypes!:Array<KeyValuePair> 
 propertieview:IPropertyBase={
-        Id: null,
-        Name: '',
-        Price: null,
-        SellRent: null,
-        PType: null,
-        FType: null,
-        Bhk: 4,
-        BuiltArea: null,
-        City: '',
-        ReadyToMove: null,
+        id: null,
+        name: '',
+        price: null,
+        sellRent: null,
+        propertyType: null,
+        furnishingType: null,
+        bhk: 4,
+        builtArea: null,
+        city: '',
+        readyToMove: null,
         photo:"../../../assets/images/default.jpg"
 
 };
@@ -61,8 +68,8 @@ createAddpropertyForm(){
       Price:[null,Validators.required],
       BuiltArea:[null,Validators.required],
       CarpetArea:[null],
-      Security:[null],
-      Maintenance:[null]
+      Security:[0],
+      Maintenance:[0]
     }),
     AddressInfo: this.fb.group({
       FloorNo: [null],
@@ -88,13 +95,21 @@ createAddpropertyForm(){
       if (this.allTabsValid()) {
 
       this.mapProperty();
-      this.housingservice.addproperty(this.property);
-      this.alertify.success("new property added");
-      if(this.SellRent.value=='2'){
-        this.router.navigate(['/rent-property'])
-      }else{
-        this.router.navigate(['/']);
-      }
+      console.log(this.property)
+      // console.log(this.addPropertyForm.value);
+      // this.housingservice.addproperty(this.property).subscribe(()=>
+      //   {
+      //     this.alertify.success("new property added");
+      //     if(this.SellRent.value=='2'){
+      //       this.router.navigate(['/rent-property'])
+      //     }else{
+      //       this.router.navigate(['/']);
+      //     }
+      //   },error=>{
+      //     this.alertify.error(error.error)
+      //   }
+      // );
+     
 }
 
 
@@ -233,26 +248,27 @@ selectTab(NextTabId: number, IsCurrentTabValid: boolean) {
 }
 
   mapProperty(): void {
-    this.property.Id=this.housingservice.newpropid();
-    this.property.SellRent = +this.SellRent.value;
-    this.property.Bhk = this.BHK.value;
-    this.property.PType = this.PType.value;
-    this.property.Name = this.Name.value;
-    this.property.City = this.City.value;
-    this.property.FType = this.FType.value;
-    this.property.Price = this.Price.value;
+    this.property.id=this.housingservice.newpropid();
+    this.property.sellRent = +this.SellRent.value;
+    this.property.bhk = this.BHK.value;
+    this.property.propertyTypeId = this.PType.value;
+    this.property.name = this.Name.value;
+    this.property.CityId = this.City.value;
+    this.property.furnishingTypeId = this.FType.value;
+    this.property.price = this.Price.value;
     this.property.security = this.Security.value;
     this.property.maintenance = this.Maintenance.value;
-    this.property.BuiltArea = this.BuiltArea.value;
+    this.property.builtArea = this.BuiltArea.value;
     this.property.carpetArea = this.CarpetArea.value;
     this.property.floorNo = this.FloorNo.value;
     this.property.totalFloors = this.TotalFloor.value;
     this.property.address = this.Address.value;
     this.property.address2 = this.LandMark.value;
-    this.property.ReadyToMove = this.RTM.value;
+    this.property.readyToMove = this.RTM.value;
     this.property.gated = this.Gated.value;
     this.property.mainEntrance = this.MainEntrance.value;
-    this.property.Possession =this.PossessionOn.value
+    this.property.estPossessionOn =this.PossessionOn.value
     this.property.description = this.Description.value;
 }
 }
+ 

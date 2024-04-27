@@ -15,13 +15,9 @@ export class PropertyDetailComponent implements OnInit {
   constructor(private root:ActivatedRoute, private router:Router, private housingservice:HousingService){}
 
   ngOnInit(): void {
+
    this.propertyid = Number(this.root.snapshot.params['id']);
-  //  this.root.data.subscribe(
-  //   data=>{
-  //     this.property=data['prp']
-  //   }
-  //  )
-   //for refreching component 
+   
    this.root.params.subscribe(
     (params)=>{
       this.propertyid=+params['id'];
@@ -29,11 +25,13 @@ export class PropertyDetailComponent implements OnInit {
         (data: IPropertyBase | undefined) => {
           if (data) {
             this.property = data as Property;
+            this.property.age=this.housingservice.getPropertyAge(this.property.estPossessionOn);
           }
         }
       )
     }
    )
+  
   }
 
   OnSelectNext(){

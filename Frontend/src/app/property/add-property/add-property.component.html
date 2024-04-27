@@ -13,10 +13,10 @@
                   <p>I want to</p>
                   <div class="btn-group" btnRadioGroup >
                       <label class="btn btn-outline-primary mr-2">
-                        <input type="radio" [value]="1" [(ngModel)]="propertieview.SellRent"  formControlName="SellRent"> Sell
+                        <input type="radio" [value]="1" [(ngModel)]="propertieview.sellRent"  formControlName="SellRent"> Sell
                       </label>
                       <label class="btn btn-outline-primary">
-                          <input type="radio" [value]="2"  [(ngModel)]="propertieview.SellRent"  formControlName="SellRent" > Rent
+                          <input type="radio" [value]="2"  [(ngModel)]="propertieview.sellRent"  formControlName="SellRent" > Rent
                       </label>
                   </div>
               </div>
@@ -25,7 +25,7 @@
                   <p>BHK</p>
                   <div class="btn-group" btnRadioGroup  >
                     <label *ngFor="let bhk of [1, 2, 3, 4]" class="btn btn-outline-primary mr-2" tabindex="0" role="button" >
-                      <input type="radio" [value]="bhk" [(ngModel)]="propertieview.Bhk" formControlName="BHK"> {{ bhk }}
+                      <input type="radio" [value]="bhk" [(ngModel)]="propertieview.bhk" formControlName="BHK"> {{ bhk }}
                     </label>
                   </div>
                 </div>
@@ -34,7 +34,7 @@
                   <p>Property Type</p>
                   <div class="btn-group" btnRadioGroup  >
                     <label *ngFor="let ptype of propertytypes" class="btn btn-outline-primary mr-2" tabindex="0" role="button" >
-                      <input type="radio" [value]="ptype" [(ngModel)]="propertieview.PType" formControlName="PType"> {{ ptype }}
+                      <input type="radio" [value]="ptype.id" (click)="propertieview.propertyType=ptype.name" formControlName="PType"> {{ ptype.name }}
                     </label>
                   </div>
                 </div>
@@ -44,8 +44,8 @@
                   <p>Furniture Type</p>
                   <div class="btn-group" btnRadioGroup >
                     <label *ngFor="let ftype of furnishtypes" class="btn btn-outline-primary mr-2" tabindex="0" role="button">
-                      <input type="radio" [value]="ftype"  [(ngModel)]="propertieview.FType" formControlName="FType">
-                      {{ ftype }}
+                      <input type="radio" [value]="ftype.id" (click)="propertieview.furnishingType=ftype.name" formControlName="FType">
+                      {{ ftype.name }}
                     </label>
                   </div>
                  
@@ -56,7 +56,7 @@
 
                 <div class="form-group col-12">
                   <label>in Building/Society/Project</label>
-                  <input type="text" class="form-control" #propName [(ngModel)]="propertieview.Name" formControlName="Name">
+                  <input type="text" class="form-control" #propName [(ngModel)]="propertieview.name" formControlName="Name">
                  
                
 
@@ -65,7 +65,7 @@
 
                 <div class="form-group col-12">
                   <label>City</label>
-                   <Select  class="form-control" [(ngModel)]="propertieview.City" formControlName="City">
+                   <Select  class="form-control" [(ngModel)]="propertieview.city" formControlName="City" ngDefaultControl >
                   <option value="">--Select City--</option>
                   <option *ngFor="let City of CitiyList" value="{{City.id}}">{{City.name}}</option>
                   </Select>
@@ -85,7 +85,7 @@
                   <div class="form-group col-12">
                     <label *ngIf="SellRent.value===1" >Price (in USD)</label>
                     <label *ngIf="SellRent.value===2" >Rent (in USD)</label>
-                    <input type="text" class="form-control" [(ngModel)]="propertieview.Price"
+                    <input type="text" class="form-control" [(ngModel)]="propertieview.price"
                     #price formControlName="Price"
                >
 
@@ -111,7 +111,7 @@
                   <div class="form-group col-12">
                     <label>Built Area (in Sqr Feet)</label>
                     <input type="text"
-                    class="form-control" #builtArea formControlName="BuiltArea" [(ngModel)]="propertieview.BuiltArea"
+                    class="form-control" #builtArea formControlName="BuiltArea" [(ngModel)]="propertieview.builtArea"
                  
                 >
                  
@@ -180,17 +180,17 @@
                   <p>Ready to Move</p>
                   <div class="btn-group" btnRadioGroup>
                       <label class="btn btn-outline-primary mr-2">
-                          <input type="radio" [value]="true" [(ngModel)]="propertieview.ReadyToMove" formControlName="RTM"> Yes
+                          <input type="radio" [value]="true" [(ngModel)]="propertieview.readyToMove" formControlName="RTM"> Yes
                       </label>
                       <label class="btn btn-outline-primary">
-                          <input type="radio" [value]="false" [(ngModel)]="propertieview.ReadyToMove" formControlName="RTM" > No
+                          <input type="radio" [value]="false" [(ngModel)]="propertieview.readyToMove" formControlName="RTM" > No
                       </label>
                   </div>
               </div>
 
                 <div class="form-group col-6">
-                  <label *ngIf="propertieview.ReadyToMove">Establishment Date</label>
-                  <label *ngIf="!propertieview.ReadyToMove">Possession Date</label>
+                  <label *ngIf="propertieview.readyToMove">Establishment Date</label>
+                  <label *ngIf="!propertieview.readyToMove">Possession Date</label>
                   <input type="text"
                   class="form-control"
                    formControlName="PossessionOn"

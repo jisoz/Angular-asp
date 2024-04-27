@@ -6,17 +6,17 @@
           <!-- <img *ngIf="!mainPhotoUrl" class="card-img-top" src="assets/images/house_default.png"> -->
         </div>
         <div class="card-body">
-          <h1 class="card-title">{{property.Name}}</h1>
+          <h1 class="card-title">{{property.name}}</h1>
           <div>
-            <strong>{{property.Bhk}} BHK {{property.PType}} &#64; ${{property.Price}}</strong>
+            <strong>{{property.bhk}} BHK {{property.propertyType}} &#64; ${{property.price}}</strong>
           </div>
           <div>
-            <strong>in {{property.City}}</strong>
+            <strong>in {{property.city}}</strong>
           </div>
           <hr>
           <div>
             <strong>Build Area: </strong>
-            {{property.BuiltArea}} Sqft
+            {{property.builtArea}} Sqft
           </div>
   
           <div>
@@ -25,12 +25,12 @@
           </div>
           <div>
             <strong>Furnishing Type: </strong>
-            {{property.FType}}
+            {{property.furnishingType}}
           </div>
           <div>
             <strong>Available for: </strong>
-            <span *ngIf="property.SellRent == 1">Purchase</span>
-            <span *ngIf="property.SellRent == 2">Rent</span>
+            <span *ngIf="property.sellRent == 1">Purchase</span>
+            <span *ngIf="property.sellRent == 2">Rent</span>
           </div>
   
         </div>
@@ -51,7 +51,7 @@
               <div class="col-sm-6">
                 <div class="heading">
                   <strong>Project Name</strong>
-                  <p>{{property.Name}}</p>
+                  <p>{{property.name}}</p>
                 </div>
   
                 <div class="heading">
@@ -66,7 +66,7 @@
   
                 <div class="heading">
                   <strong>Posession</strong>
-                  <p>{{property.Possession | date}}</p>
+                  <p>{{property.estPossessionOn | date}}</p>
                 </div>
               </div>    
   
@@ -105,7 +105,7 @@
               <div class="heading">
                 <strong>{{property.address}}</strong><br />
                 <strong>{{property.address2}}</strong><br />
-                <strong>{{property.City}}</strong>
+                <strong>{{property.city}}</strong>
               </div>
             </div>
   
