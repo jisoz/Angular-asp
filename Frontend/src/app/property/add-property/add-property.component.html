@@ -67,7 +67,7 @@
                   <label>City</label>
                    <Select  class="form-control" [(ngModel)]="propertieview.city" formControlName="City" ngDefaultControl >
                   <option value="">--Select City--</option>
-                  <option *ngFor="let City of CitiyList" value="{{City.id}}">{{City.name}}</option>
+                  <option *ngFor="let City of CitiyList" value={{City.id}}>{{City.name}}</option>
                   </Select>
                     
                  

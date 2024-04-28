@@ -6,6 +6,7 @@ import { IPropertyBase } from '../../model/ipropertybase';
 import { Property } from '../../model/property';
 import { environment } from '../../environments/environment.development';
 import { KeyValuePair } from '../../model/KeyValuePair';
+import { propertyadd } from '../../model/propertadd';
 @Injectable({
   providedIn: 'root'
 })
@@ -81,8 +82,10 @@ return this.http.get<any[]>(`${this.baseurl}City`)
   // )
   }   
 
-  addproperty(property: Property) {
-    return this.http.post(this.baseurl +"Property/post", property)
+  addproperty(property: propertyadd) {
+   let head_obj=new HttpHeaders().set("Authorization","bearer " +localStorage.getItem("Token"));
+    console.log(localStorage.getItem('Token'))
+    return this.http.post(this.baseurl +"Property/post", property,{headers:head_obj})
   //  let properties=[];
   //  const newprop = localStorage.getItem("newprop");
   //  if (newprop!=null){

@@ -8,6 +8,7 @@ import { Property } from '../../../model/property';
 import { HousingService } from '../../services/housing.service';
 import { AlertifyService } from '../../services/alertify.service';
 import { KeyValuePair } from '../../../model/KeyValuePair';
+import { propertyadd } from '../../../model/propertadd';
 
 @Component({
   selector: 'app-add-property',
@@ -15,7 +16,7 @@ import { KeyValuePair } from '../../../model/KeyValuePair';
   styleUrl: './add-property.component.css'
 })
 export class AddPropertyComponent implements OnInit {
-  property=new Property();
+  property=new propertyadd();
   nextClicked!: boolean;
 // @viewC @ViewChild('Formtabs') formtabs:TabsetComponent;hild("Form") addpropertyform!:NgForm
 constructor(private fb: FormBuilder , private router: Router , private housingservice:HousingService,private alertify:AlertifyService){
@@ -95,20 +96,20 @@ createAddpropertyForm(){
       if (this.allTabsValid()) {
 
       this.mapProperty();
-      console.log(this.property)
+      // console.log(this.property)
       // console.log(this.addPropertyForm.value);
-      // this.housingservice.addproperty(this.property).subscribe(()=>
-      //   {
-      //     this.alertify.success("new property added");
-      //     if(this.SellRent.value=='2'){
-      //       this.router.navigate(['/rent-property'])
-      //     }else{
-      //       this.router.navigate(['/']);
-      //     }
-      //   },error=>{
-      //     this.alertify.error(error.error)
-      //   }
-      // );
+      this.housingservice.addproperty(this.property).subscribe(()=>
+        {
+          this.alertify.success("new property added");
+          if(this.SellRent.value=='2'){
+            this.router.navigate(['/rent-property'])
+          }else{
+            this.router.navigate(['/']);
+          }
+        },error=>{
+          this.alertify.error(error.error)
+        }
+      );
      
 }
 
@@ -248,20 +249,20 @@ selectTab(NextTabId: number, IsCurrentTabValid: boolean) {
 }
 
   mapProperty(): void {
-    this.property.id=this.housingservice.newpropid();
+    // this.property.id=this.housingservice.newpropid();
     this.property.sellRent = +this.SellRent.value;
     this.property.bhk = this.BHK.value;
     this.property.propertyTypeId = this.PType.value;
     this.property.name = this.Name.value;
-    this.property.CityId = this.City.value;
+    this.property.CityId = +this.City.value;
     this.property.furnishingTypeId = this.FType.value;
-    this.property.price = this.Price.value;
+    this.property.price = +this.Price.value;
     this.property.security = this.Security.value;
     this.property.maintenance = this.Maintenance.value;
-    this.property.builtArea = this.BuiltArea.value;
-    this.property.carpetArea = this.CarpetArea.value;
-    this.property.floorNo = this.FloorNo.value;
-    this.property.totalFloors = this.TotalFloor.value;
+    this.property.builtArea = +this.BuiltArea.value;
+    this.property.carpetArea = +this.CarpetArea.value;
+    this.property.floorNo = +this.FloorNo.value;
+    this.property.totalFloors = +this.TotalFloor.value;
     this.property.address = this.Address.value;
     this.property.address2 = this.LandMark.value;
     this.property.readyToMove = this.RTM.value;
@@ -269,6 +270,7 @@ selectTab(NextTabId: number, IsCurrentTabValid: boolean) {
     this.property.mainEntrance = this.MainEntrance.value;
     this.property.estPossessionOn =this.PossessionOn.value
     this.property.description = this.Description.value;
+    this.property.aop=0;
 }
 }
  
